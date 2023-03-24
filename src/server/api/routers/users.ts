@@ -1,8 +1,10 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "y/server/api/trpc";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
+
+type EditUserPayload = Pick<User, "username">;
 
 export const getUserByUsername = async (
   prisma: PrismaClient,
@@ -19,6 +21,12 @@ export const getUserByUsername = async (
   }
   return user;
 };
+
+export const editUser = (
+  prisma: PrismaClient,
+  userId: string,
+  newUser: EditUserPayload
+) => {};
 
 export const usersRouter = createTRPCRouter({
   getByUsername: publicProcedure
