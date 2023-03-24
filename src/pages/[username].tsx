@@ -28,8 +28,14 @@ const ProfilePage: NextPage<
 > = ({ username }) => {
   const getUser = api.users.getByUsername.useQuery({ username });
   const user = getUser.data;
-  if (!user) {
+  if (getUser.isLoading) {
     return <div>Loading</div>;
+  }
+  if (getUser.isError) {
+    return <div>Error: {getUser.error.message}</div>;
+  }
+  if (!user) {
+    return <div>Something went wrong.</div>;
   }
   return <div>Im your mom, {user.name}</div>;
 };
